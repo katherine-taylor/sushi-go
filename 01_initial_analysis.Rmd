@@ -1,0 +1,39 @@
+---
+title: "Sushi Go Simulation Analysis"
+author: "Katherine"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(MetBrewer)
+library(hrbrthemes)
+pal <- met.brewer("Hokusai1",8)
+```
+
+# Import data
+```{r}
+sim <- read_csv(here::here("data/sim_results.csv"))
+
+sim_df <- sim |>
+  select(run:score_2) |>
+  pivot_longer(
+    cols = c("score_1", "score_2", "hold_1", "hold_2"),
+    names_to = c(".value", "player_number"),
+    names_pattern = "(.+)_(.+)"
+  )
+```
+
+```{r}
+# visualize scores by round
+sim_df |>  
+  ggplot(aes(x = score, fill = player_number)) +
+  geom_density(alpha = 0.8) +
+  scale_fill_manual(values = pal) +
+  facet_wrap(~round, nrow = 3) +
+  theme_minimal()
+```
+
+# is difference in scores statistically significant?

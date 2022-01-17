@@ -68,7 +68,7 @@ def score_round(round_num, hold_1, hold_2, prev_score_1, prev_score_2, dumpling_
         prev_score_2 += 3
     else:
         prev_score_1 += 3
-        prev_score_2 += 3
+        prev_score_2 += 6
     
     # tempura
     if counts_1["tempura"] // 2 > 0:
